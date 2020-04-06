@@ -1,13 +1,5 @@
 import React from "react";
-import {
-  Text,
-  StyleSheet,
-  Image,
-  View,
-  TouchableHighlight,
-} from "react-native";
-
-import { TouchableOpacity } from "react-native-gesture-handler";
+import { StyleSheet, View } from "react-native";
 import ShelfSideComponent from "../components/ShelfSideComponent";
 
 const HomeScreen = ({ navigation }) => {
@@ -17,10 +9,30 @@ const HomeScreen = ({ navigation }) => {
       <View style={styles.container}>
         {/* Button 1 */}
         <View>
-          <ShelfSideComponent />
+          <ShelfSideComponent shelfId="1" shelfSide="left" />
         </View>
         <View>
-          <ShelfSideComponent />
+          <ShelfSideComponent shelfId="1" shelfSide="right" />
+        </View>
+      </View>
+
+      <View style={styles.container}>
+        {/* Button 1 */}
+        <View>
+          <ShelfSideComponent shelfId="2" shelfSide="left" />
+        </View>
+        <View>
+          <ShelfSideComponent shelfId="2" shelfSide="right" />
+        </View>
+      </View>
+
+      <View style={styles.container}>
+        {/* Button 1 */}
+        <View>
+          <ShelfSideComponent shelfId="3" shelfSide="left" />
+        </View>
+        <View>
+          <ShelfSideComponent shelfId="3" shelfSide="right" />
         </View>
       </View>
     </View>
@@ -30,6 +42,7 @@ const HomeScreen = ({ navigation }) => {
 const styleObj = {
   container: {
     flexDirection: "row",
+    alignItems: "flex-end",
     justifyContent: "space-around",
   },
 };
