@@ -16,6 +16,7 @@ const getImage = (num) => {
 
 const ShelfSideComponent = (props) => {
   const [modalOpen, setModalOpen] = useState(false);
+
   return (
     <View>
       <TouchableOpacity
