@@ -4,7 +4,7 @@ import { StyleSheet, View, Text } from "react-native";
 const AboutScreen = () => {
   return (
     <View style={styles.container}>
-      <Text>About</Text>
+      <Text>Ceres!</Text>
     </View>
   );
 };

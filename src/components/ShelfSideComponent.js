@@ -3,15 +3,27 @@ import { Text, StyleSheet, View, Image, Modal } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { MaterialIcons } from "@expo/vector-icons";
 
-const IMAGES = {
+const SHELF_IMAGES = {
   image1: require("../../assets/images/shelf-tab/1.png"),
   image2: require("../../assets/images/shelf-tab/2.png"),
   image3: require("../../assets/images/shelf-tab/3.png"),
 };
 
-const getImage = (num) => {
-  let element = IMAGES["image" + num];
-  return element;
+const CAMERA_IMAGES = {
+  image1left: require("../../assets/images/shelf/shelf_1_left.jpg"),
+  image1right: require("../../assets/images/shelf/shelf_1_right.jpg"),
+  image2left: require("../../assets/images/shelf/shelf_2_left.jpg"),
+  image2right: require("../../assets/images/shelf/shelf_2_right.jpg"),
+  image3left: require("../../assets/images/shelf/shelf_3_left.jpg"),
+  image3right: require("../../assets/images/shelf/shelf_3_right.jpg"),
+};
+
+const getShelfImage = (shelfId) => {
+  return SHELF_IMAGES["image" + shelfId];
+};
+
+const getCameraImage = (shelfID, shelfSide) => {
+  return CAMERA_IMAGES["image" + shelfID + shelfSide];
 };
 
 const ShelfSideComponent = (props) => {
@@ -25,13 +37,16 @@ const ShelfSideComponent = (props) => {
         }}
       >
         <View>
-          <Image style={styles.imageStyle} source={getImage(props.shelfId)} />
+          <Image
+            style={styles.shelfImageStyle}
+            source={getShelfImage(props.shelfId)}
+          />
         </View>
       </TouchableOpacity>
 
       <View>
         <Modal visible={modalOpen} animationType="slide">
-          <View style={StyleSheet.modalContent}>
+          <View style={styles.modalContent}>
             <MaterialIcons
               name="close"
               size={24}
@@ -40,9 +55,10 @@ const ShelfSideComponent = (props) => {
                 setModalOpen(false);
               }}
             />
-            <Text style={styles.titleText}>
-              Hello, from the modal {props.shelfId + " " + props.shelfSide} :)
-            </Text>
+            <Image
+              style={styles.cameraImageStyle}
+              source={getCameraImage(props.shelfId, props.shelfSide)}
+            />
           </View>
         </Modal>
       </View>
@@ -51,9 +67,14 @@ const ShelfSideComponent = (props) => {
 };
 
 const stylesObj = {
-  imageStyle: {
+  shelfImageStyle: {
     height: 220,
     width: 200,
+  },
+  cameraImageStyle: {
+    height: 400,
+    width: 400,
+    left: 25,
   },
   modalToggle: {
     marginTop: 10,

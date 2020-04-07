@@ -7,7 +7,6 @@ const HomeScreen = ({ navigation }) => {
     <View>
       {/* ROW 1 */}
       <View style={styles.container}>
-        {/* Button 1 */}
         <View>
           <ShelfSideComponent shelfId="1" shelfSide="left" />
         </View>
@@ -16,8 +15,8 @@ const HomeScreen = ({ navigation }) => {
         </View>
       </View>
 
+      {/* ROW 2 */}
       <View style={styles.container}>
-        {/* Button 1 */}
         <View>
           <ShelfSideComponent shelfId="2" shelfSide="left" />
         </View>
@@ -26,8 +25,8 @@ const HomeScreen = ({ navigation }) => {
         </View>
       </View>
 
+      {/* ROW 3 */}
       <View style={styles.container}>
-        {/* Button 1 */}
         <View>
           <ShelfSideComponent shelfId="3" shelfSide="left" />
         </View>
