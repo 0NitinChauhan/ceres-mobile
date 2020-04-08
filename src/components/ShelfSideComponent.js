@@ -37,6 +37,12 @@ const getCameraImage = (shelfID, shelfSide) => {
 const ShelfSideComponent = (props) => {
   const [modalOpen, setModalOpen] = useState(false);
   const [imagePopoverState, setImagePopoverState] = useState(false);
+  const [popOverText, setPopoverText] = useState(false);
+
+  const handlePopOverText = (x, y) => {
+    let text = `X: ${x}\nY:${y}`;
+    setPopoverText(text);
+  };
 
   return (
     <View>
@@ -67,8 +73,23 @@ const ShelfSideComponent = (props) => {
 
             <View>
               <TouchableOpacity
-                onPress={() => {
+                onPress={(event) => {
                   setImagePopoverState(true);
+                  handlePopOverText(
+                    event.nativeEvent.locationX,
+                    event.nativeEvent.locationY
+                  );
+                  console.log(`x: ${event.nativeEvent.locationX}`);
+                  console.log(`y: ${event.nativeEvent.locationY}`);
+                  setTimeout(
+                    function () {
+                      setImagePopoverState(false);
+                    }.bind(this),
+                    2000
+                  );
+                }}
+                onLayout={({ nativeEvent }) => {
+                  console.log(nativeEvent.layout);
                 }}
               >
                 <Image
@@ -92,7 +113,7 @@ const ShelfSideComponent = (props) => {
               }}
             />
 
-            <Text>This is some text</Text>
+            <Text>{popOverText}</Text>
           </View>
         </Popover>
       </View>
