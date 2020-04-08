@@ -1,7 +1,15 @@
 import React, { useState } from "react";
-import { Text, StyleSheet, View, Image, Modal } from "react-native";
-import { TouchableOpacity } from "react-native-gesture-handler";
+import {
+  Text,
+  StyleSheet,
+  View,
+  Image,
+  Modal,
+  TouchableOpacity,
+} from "react-native";
+// import { TouchableOpacity } from "react-native-gesture-handler";
 import { MaterialIcons } from "@expo/vector-icons";
+import Popover from "react-native-popover-view";
 
 const SHELF_IMAGES = {
   image1: require("../../assets/images/shelf-tab/1.png"),
@@ -28,6 +36,7 @@ const getCameraImage = (shelfID, shelfSide) => {
 
 const ShelfSideComponent = (props) => {
   const [modalOpen, setModalOpen] = useState(false);
+  const [imagePopoverState, setImagePopoverState] = useState(false);
 
   return (
     <View>
@@ -55,12 +64,37 @@ const ShelfSideComponent = (props) => {
                 setModalOpen(false);
               }}
             />
-            <Image
-              style={styles.cameraImageStyle}
-              source={getCameraImage(props.shelfId, props.shelfSide)}
-            />
+
+            <View>
+              <TouchableOpacity
+                onPress={() => {
+                  setImagePopoverState(true);
+                }}
+              >
+                <Image
+                  style={styles.cameraImageStyle}
+                  source={getCameraImage(props.shelfId, props.shelfSide)}
+                />
+              </TouchableOpacity>
+            </View>
           </View>
         </Modal>
+      </View>
+
+      <View>
+        <Popover isVisible={imagePopoverState}>
+          <View style={styles.popover}>
+            <MaterialIcons
+              name="close"
+              size={20}
+              onPress={() => {
+                setImagePopoverState(false);
+              }}
+            />
+
+            <Text>This is some text</Text>
+          </View>
+        </Popover>
       </View>
     </View>
   );
@@ -89,6 +123,12 @@ const stylesObj = {
   titleText: {
     fontFamily: "nunito-bold",
     fontSize: 18,
+  },
+  popover: {
+    flex: 1,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "flex-start",
   },
 };
 
