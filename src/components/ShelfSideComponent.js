@@ -10,6 +10,7 @@ import {
 // import { TouchableOpacity } from "react-native-gesture-handler";
 import { MaterialIcons } from "@expo/vector-icons";
 import Popover from "react-native-popover-view";
+import CeresApi from "../api/ceres";
 
 const SHELF_IMAGES = {
   image1: require("../../assets/images/shelf-tab/1.png"),
@@ -34,6 +35,16 @@ const getCameraImage = (shelfID, shelfSide) => {
   return CAMERA_IMAGES["image" + shelfID + shelfSide];
 };
 
+const makeServerRequest = () => {
+  try {
+    CeresApi.get("/get-all-items").then(function (response) {
+      console.log(response);
+    });
+  } catch (err) {
+    console.log("caught error: ", err);
+  }
+};
+
 const ShelfSideComponent = (props) => {
   const [modalOpen, setModalOpen] = useState(false);
   const [imagePopoverState, setImagePopoverState] = useState(false);
@@ -48,6 +59,7 @@ const ShelfSideComponent = (props) => {
     <View>
       <TouchableOpacity
         onPressIn={() => {
+          makeServerRequest();
           setModalOpen(true);
         }}
       >
