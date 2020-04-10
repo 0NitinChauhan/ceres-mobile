@@ -4,6 +4,7 @@ import { createAppContainer } from "react-navigation";
 
 import HomeStack from "../routes/HomeStack";
 import AboutStack from "./AboutStack";
+import ListShelfItemsStack from "../routes/ListShelfItemsStack";
 
 const RootDrawerNavigator = createDrawerNavigator({
   // options on the draw
@@ -16,10 +17,12 @@ const RootDrawerNavigator = createDrawerNavigator({
 
   // show About stack --> in About Stack --> the default screen (about screen is the only screen)
   About: {
-      screen: AboutStack
-  }
+    screen: AboutStack,
+  },
+  "List of Items": {
+    screen: ListShelfItemsStack,
+  },
 });
-
 
 // this wraps the RootDrawerNavigator into a component
 export default createAppContainer(RootDrawerNavigator);
