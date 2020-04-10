@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
 } from "react-native";
 import CeresApi from "../api/ceres";
-import Constants from "../utils/Constants";
+import CroppedImageComponent from "../components/CroppedImageComponent";
 
 const ListShelfItemsScreen = () => {
   const makeServerRequest = () => {
@@ -40,6 +40,8 @@ const ListShelfItemsScreen = () => {
         </TouchableOpacity>
       </View>
 
+      <View></View>
+
       {/** List of items */}
       <FlatList
         horizontal={false}
@@ -55,6 +57,11 @@ const ListShelfItemsScreen = () => {
                 {item.item_brand + " " + item.item_category}
               </Text>
               <Text style={styles.listItem}>{item.item_current_weight}</Text>
+              <CroppedImageComponent
+                shelfId={item.item_shelf_id}
+                shelfSide={item.item_side}
+                coordinates={item.item_location[0]}
+              />
             </View>
           );
         }}

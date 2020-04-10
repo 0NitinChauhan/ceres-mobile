@@ -1,12 +1,5 @@
 import React, { useState } from "react";
-import {
-  Text,
-  StyleSheet,
-  View,
-  Image,
-  Modal,
-  TouchableOpacity,
-} from "react-native";
+import { Text, StyleSheet, View, Image, Modal, TouchableOpacity } from "react-native";
 // import { TouchableOpacity } from "react-native-gesture-handler";
 import { MaterialIcons } from "@expo/vector-icons";
 import Popover from "react-native-popover-view";
@@ -58,9 +51,6 @@ const createTitle = (item) => {
 };
 
 const isPointWithinRectangle = (x, y, itemLocation) => {
-  console.log("checking for item location", itemLocation);
-  console.log("checking for x, y", x, y);
-  console.log("==================================================");
   if (
     x > itemLocation.top_left_x &&
     y > itemLocation.top_left_y &&
@@ -73,6 +63,7 @@ const isPointWithinRectangle = (x, y, itemLocation) => {
 };
 
 const ShelfSideComponent = (props) => {
+  // Makes server request to get item information for all items in a camera image
   const makeServerRequest = (shelfId, shelfSide) => {
     try {
       CeresApi.get("/get-image-item-info", {
@@ -88,18 +79,17 @@ const ShelfSideComponent = (props) => {
     }
   };
 
+  // sets item information to be later compared to the tap on item on the camera image
   const handleServerResponse = (dataObj) => {
     let itemsInfo = [];
+    let currentSize = { width: 400, height: 400 };
     for (const item of dataObj) {
       let itemObj = {};
-      let location = {};
-      location.top_left_x = item.item_location[0].y / 3.44;
-      location.top_left_y = item.item_location[0].x / 3.44;
-      location.bottom_right_x =
-        (item.item_location[0].y + item.item_location[0].w) / 3.44;
-      location.bottom_right_y =
-        (item.item_location[0].x + item.item_location[0].h) / 3.44;
-
+      let location = Constants.getResizedImageCoordinates(
+        Constants.getOriginalCameraImageSize(),
+        currentSize,
+        item.item_location[0]
+      );
       itemObj.itemLocation = location;
       Object.assign(itemObj, item);
       itemsInfo.push(itemObj);
@@ -107,12 +97,14 @@ const ShelfSideComponent = (props) => {
     setItemsInfo(itemsInfo);
   };
 
+  // compares coordinates of tap on the item in the camera image with itemsInfo
+  // sets popover text based on the determined item using the above info
   const handlePopOverText = (x, y) => {
-    console.log("popover text", x, y);
     let currentItem = undefined;
     for (let item of itemsInfo) {
       if (isPointWithinRectangle(x, y, item.itemLocation)) {
         currentItem = item;
+        console.log("==================================================");
         console.log("found item");
         break;
       }
@@ -140,10 +132,7 @@ const ShelfSideComponent = (props) => {
         }}
       >
         <View>
-          <Image
-            style={styles.shelfImageStyle}
-            source={{ uri: getShelfImage(props.shelfId) }}
-          />
+          <Image style={styles.shelfImageStyle} source={{ uri: getShelfImage(props.shelfId) }} />
         </View>
       </TouchableOpacity>
 
@@ -162,11 +151,8 @@ const ShelfSideComponent = (props) => {
             <View>
               <TouchableOpacity
                 onPress={(event) => {
-                  handlePopOverText(
-                    event.nativeEvent.locationX,
-                    event.nativeEvent.locationY
-                  );
-                  console.log("pop over text inside", popOverText);
+                  handlePopOverText(event.nativeEvent.locationX, event.nativeEvent.locationY);
+
                   if (popOverText.length != 0) {
                     setImagePopoverState(true);
                     setTimeout(
