@@ -11,14 +11,19 @@ import {
 import { MaterialIcons } from "@expo/vector-icons";
 import Popover from "react-native-popover-view";
 import CeresApi from "../api/ceres";
+import Constants from "../utils/Constants";
 
-const SHELF_IMAGES = {
-  image1: require("../../assets/images/shelf-tab/1.png"),
-  image2: require("../../assets/images/shelf-tab/2.png"),
-  image3: require("../../assets/images/shelf-tab/3.png"),
+const getShelfImage = (shelfId) => {
+  return `${Constants.getNgrokUrl()}/images/shelf-tab/${shelfId}.png`;
 };
 
-const CAMERA_IMAGES = {
+/** TODO: change image if the image changes on the server */
+const getCameraImage = (shelfId, shelfSide) => {
+  return `${Constants.getNgrokUrl()}/images/shelf/shelf_${shelfId}_${shelfSide}.jpg`;
+};
+
+/**
+ const CAMERA_IMAGES = {
   image1left: require("../../assets/images/shelf/shelf_1_left.jpg"),
   image1right: require("../../assets/images/shelf/shelf_1_right.jpg"),
   image2left: require("../../assets/images/shelf/shelf_2_left.jpg"),
@@ -34,6 +39,7 @@ const getShelfImage = (shelfId) => {
 const getCameraImage = (shelfID, shelfSide) => {
   return CAMERA_IMAGES["image" + shelfID + shelfSide];
 };
+**/
 
 const createTitle = (item) => {
   let arr = {
@@ -136,7 +142,7 @@ const ShelfSideComponent = (props) => {
         <View>
           <Image
             style={styles.shelfImageStyle}
-            source={getShelfImage(props.shelfId)}
+            source={{ uri: getShelfImage(props.shelfId) }}
           />
         </View>
       </TouchableOpacity>
@@ -175,9 +181,12 @@ const ShelfSideComponent = (props) => {
                   }
                 }}
               >
+                {/** TODO: change image if the image changes on the server */}
                 <Image
                   style={styles.cameraImageStyle}
-                  source={getCameraImage(props.shelfId, props.shelfSide)}
+                  source={{
+                    uri: getCameraImage(props.shelfId, props.shelfSide),
+                  }}
                 />
               </TouchableOpacity>
             </View>

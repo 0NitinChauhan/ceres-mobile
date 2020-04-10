@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
 } from "react-native";
 import CeresApi from "../api/ceres";
-import { useFocusEffect } from "@react-navigation/native";
+import Constants from "../utils/Constants";
 
 const ListShelfItemsScreen = () => {
   const makeServerRequest = () => {
@@ -83,6 +83,10 @@ const styleObj = {
     width: 60,
     left: 180,
     backgroundColor: "green",
+  },
+  shelfImageStyle: {
+    height: 220,
+    width: 200,
   },
 };
 const styles = StyleSheet.create(styleObj);

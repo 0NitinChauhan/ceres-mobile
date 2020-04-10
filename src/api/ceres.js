@@ -1,5 +1,6 @@
 import axios from "axios";
+import Constants from "../utils/Constants";
 
 export default axios.create({
-  baseURL: "http://f0b64d24.ngrok.io",
+  baseURL: Constants.getNgrokUrl(),
 });
