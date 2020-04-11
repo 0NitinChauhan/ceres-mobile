@@ -1,6 +1,6 @@
 class Constants {
   static getNgrokUrl() {
-    return "https://f0b64d24.ngrok.io";
+    return "http://7f3b2849.ngrok.io";
   }
 
   static getOriginalCameraImageSize() {

@@ -1,13 +1,7 @@
 import React, { useState } from "react";
-import {
-  StyleSheet,
-  View,
-  Text,
-  FlatList,
-  TouchableOpacity,
-} from "react-native";
+import { StyleSheet, View, Text, FlatList, TouchableOpacity } from "react-native";
 import CeresApi from "../api/ceres";
-import CroppedImageComponent from "../components/CroppedImageComponent";
+import ItemCardComponent from "../components/ItemCardComponent";
 
 const ListShelfItemsScreen = () => {
   const makeServerRequest = () => {
@@ -40,8 +34,6 @@ const ListShelfItemsScreen = () => {
         </TouchableOpacity>
       </View>
 
-      <View></View>
-
       {/** List of items */}
       <FlatList
         horizontal={false}
@@ -52,16 +44,8 @@ const ListShelfItemsScreen = () => {
         data={allItems}
         renderItem={({ item }) => {
           return (
-            <View style={styles.container}>
-              <Text style={styles.listItem}>
-                {item.item_brand + " " + item.item_category}
-              </Text>
-              <Text style={styles.listItem}>{item.item_current_weight}</Text>
-              <CroppedImageComponent
-                shelfId={item.item_shelf_id}
-                shelfSide={item.item_side}
-                coordinates={item.item_location[0]}
-              />
+            <View>
+              <ItemCardComponent shelfItem={item} />
             </View>
           );
         }}
@@ -71,29 +55,11 @@ const ListShelfItemsScreen = () => {
 };
 
 const styleObj = {
-  container: {
-    paddingVertical: 25,
-    paddingHorizontal: 15,
-    justifyContent: "space-between",
-    flex: 1,
-    flexDirection: "row",
-
-    borderBottomWidth: 1,
-    borderBottomColor: "white",
-  },
-  listItem: {
-    fontSize: 21,
-    marginTop: 1,
-  },
   dummy: {
     height: 40,
     width: 60,
     left: 180,
     backgroundColor: "green",
-  },
-  shelfImageStyle: {
-    height: 220,
-    width: 200,
   },
 };
 const styles = StyleSheet.create(styleObj);
