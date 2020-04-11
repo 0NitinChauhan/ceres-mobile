@@ -1,28 +1,25 @@
 import React, { useState, useEffect } from "react";
-import { StyleSheet, View, Text, FlatList, TouchableOpacity } from "react-native";
+import { StyleSheet, View, FlatList } from "react-native";
 import CeresApi from "../api/ceres";
 import ItemCardComponent from "../components/ItemCardComponent";
 
+async function handleServerResponse(dataObj) {
+  return dataObj;
+}
+
 const ListShelfItemsScreen = () => {
-  const makeServerRequest = () => {
+  const [allItems, setAllItems] = useState([]);
+  async function makeServerRequest() {
     try {
-      CeresApi.get("/get-all-items").then(function (response) {
-        handleServerResponse(response.data);
-        console.log("Request to /get-all-items sucessful");
-      });
+      const response = await CeresApi.get("/get-all-items");
+      const dataObj = await handleServerResponse(response.data);
+      setAllItems(dataObj);
     } catch (err) {
       console.log("caught error: ", err);
     }
-  };
-
-  const handleServerResponse = (dataObj) => {
-    setAllItems(dataObj);
-  };
-
-  const [allItems, setAllItems] = useState([]);
+  }
 
   // The code inside useEffect is run one-time when the component is first rendered
-  //
   useEffect(() => {
     makeServerRequest();
   }, []);

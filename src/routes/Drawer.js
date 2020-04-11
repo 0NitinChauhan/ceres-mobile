@@ -19,7 +19,7 @@ const RootDrawerNavigator = createDrawerNavigator({
   About: {
     screen: AboutStack,
   },
-  "List of Items": {
+  "My Cabinet View": {
     screen: ListShelfItemsStack,
   },
 });
