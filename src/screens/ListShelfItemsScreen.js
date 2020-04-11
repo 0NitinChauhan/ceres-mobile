@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { StyleSheet, View, Text, FlatList, TouchableOpacity } from "react-native";
 import CeresApi from "../api/ceres";
 import ItemCardComponent from "../components/ItemCardComponent";
@@ -21,19 +21,14 @@ const ListShelfItemsScreen = () => {
 
   const [allItems, setAllItems] = useState([]);
 
+  // The code inside useEffect is run one-time when the component is first rendered
+  //
+  useEffect(() => {
+    makeServerRequest();
+  }, []);
+
   return (
     <View>
-      {/** Remove this--> just for getting data */}
-      <View>
-        <TouchableOpacity
-          onPress={() => {
-            makeServerRequest();
-          }}
-        >
-          <Text style={styles.dummy}>Dummy</Text>
-        </TouchableOpacity>
-      </View>
-
       {/** List of items */}
       <FlatList
         horizontal={false}
@@ -54,13 +49,6 @@ const ListShelfItemsScreen = () => {
   );
 };
 
-const styleObj = {
-  dummy: {
-    height: 40,
-    width: 60,
-    left: 180,
-    backgroundColor: "green",
-  },
-};
+const styleObj = {};
 const styles = StyleSheet.create(styleObj);
 export default ListShelfItemsScreen;
